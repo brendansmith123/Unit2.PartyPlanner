@@ -7,9 +7,9 @@ const state = {
 
 const eventsList = document.querySelector("#parties");
 const addEventForm = document.querySelector("#addParty");
-addEventForm.addEventListener("submit", addParty);
+addEventForm.addEventListener("submit", addEvent);
 
-// fetch events from API data
+//fetch API data
 async function fetchEvents() {
   try {
     const response = await fetch(API_URL);
@@ -71,10 +71,10 @@ function renderEvents() {
     const eventCard = document.createElement("li");
     eventCard.classList.add("event");
     eventCard.innerHTML = `
-            <h2>${event.name}</h2>
-            
-            <p>${event.description}</p>
-          `;
+        <h2>${event.name}</h2>
+        
+        <p>${event.description}</p>
+      `;
 
     const deleteButton = document.createElement("button");
     deleteButton.textContent = "Delete Party";
@@ -85,20 +85,20 @@ function renderEvents() {
     return eventCard;
   });
   eventsList.replaceChildren(...eventCards);
+}
 
-  // DELETE Method
-  async function deleteEvent(id) {
-    try {
-      console.log(id);
-      const response = await fetch(`${API_URL}/${id}`, {
-        method: "DELETE",
-      });
-      if (!response.ok) {
-        throw new Error("Party could not be deleted.");
-      }
-      render();
-    } catch (error) {
-      console.error(error);
+// DELETE Method
+async function deleteEvent(id) {
+  try {
+    console.log(id);
+    const response = await fetch(`${API_URL}/${id}`, {
+      method: "DELETE",
+    });
+    if (!response.ok) {
+      throw new Error("Party could not be deleted.");
     }
+    render();
+  } catch (error) {
+    console.error(error);
   }
 }
